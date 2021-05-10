@@ -7,7 +7,7 @@ namespace mc {
 		}
 
 		void init() {
-			textures["texture"] = utils::loadTexture("texture.png");
+			textures["texture"] = utils::loadTexture("dirt.png");
 		}
 
 		unsigned int loadTexture(const std::string& name) {

@@ -19,6 +19,6 @@ namespace mc {
 		glm::vec2 getWindowSize();
 
 	private:
-		GLFWwindow* m_window;
+		GLFWwindow* m_window = nullptr;
 	};
 }

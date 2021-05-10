@@ -1,7 +1,7 @@
 #include "Drawable.h"
 
 namespace mc {
-	void Drawable::init(unsigned int vertex_buffer_id, std::string textureName) {
+	void Drawable::init(unsigned int vertex_buffer_id, std::string textureName, glm::vec3 pos) {
 		m_textureName = textureName;
 
 		glGenVertexArrays(1, &m_VAO);
@@ -15,13 +15,21 @@ namespace mc {
 		glEnableVertexAttribArray(1);
 
 
-		m_model = glm::translate(m_model, glm::vec3(0.0, 0.0, 0.0));
+		m_model = glm::translate(m_model, glm::vec3(pos));
 	}
 
 	void Drawable::draw(Shader shader) {
 		shader.use();
 		shader.setMat4("model", m_model);
-		glBindTexture(GL_TEXTURE0, Textures::loadTexture(m_textureName));
+		glBindTexture(GL_TEXTURE_2D, Textures::loadTexture(m_textureName));
+		glBindVertexArray(m_VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
+
+	void Drawable::draw(Shader* shader) {
+		shader->use();
+		shader->setMat4("model", m_model);
+		glBindTexture(GL_TEXTURE_2D, Textures::loadTexture(m_textureName));
 		glBindVertexArray(m_VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}

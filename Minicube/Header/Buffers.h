@@ -8,7 +8,7 @@ namespace mc {
 
 	namespace Buffers {
 		 void init();
-		 unsigned int get(utils::Buffer buffer);
+		 unsigned int get(mc::utils::Buffer buffer);
 		
 	};
 }

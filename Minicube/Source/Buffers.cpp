@@ -14,7 +14,7 @@ namespace mc {
 			glGenBuffers(1, &cube_VBO);
 			
 			glBindBuffer(GL_ARRAY_BUFFER, cube_VBO);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertex::cube), vertex::cube, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertex::cube), vertex::cube, GL_DYNAMIC_DRAW);
 		}
 
 		unsigned int get(utils::Buffer buffer) {

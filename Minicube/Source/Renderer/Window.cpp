@@ -7,8 +7,10 @@ namespace mc {
 	}
 
 	void Window::init() {
-		m_window = glfwCreateWindow(720, 480, "Coucou", nullptr, nullptr);
-
+		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		//m_window = glfwCreateWindow(mode->width, mode->height, "Minicube", glfwGetPrimaryMonitor(), nullptr);
+		m_window = glfwCreateWindow(1920, 1080, "Minicube", nullptr, nullptr);
+		
 		if (!m_window) {
 			glfwTerminate();
 			std::cout << "Failed to initialize the window" << std::endl;

@@ -2,7 +2,11 @@
 
 
 namespace mc {
-	void Renderer::init(Camera* camera) {
+	void Renderer::init(Camera* camera, World* world) {
+
+		m_camera = camera;
+		m_world = world;
+		
 		if (!glfwInit()) {
 			std::cout << "Failed to initialize glfw" << std::endl;
 			return;
@@ -30,11 +34,10 @@ namespace mc {
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_MULTISAMPLE);
-
+		glEnable(GL_CULL_FACE);
 
 		shader.load("Shaders/shader.vert", "Shaders/shader.frag");
 
-		m_camera = camera;
 		projection = glm::perspective(glm::radians(45.0f), m_window.getWindowSize().x / m_window.getWindowSize().y, 0.1f, 100.0f);
 
 	}
@@ -52,7 +55,11 @@ namespace mc {
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", m_camera->getMatrix());
 
-		block.draw(shader);
+		std::vector<Chunk*> chunks = m_world->getVisibleChunks();
+		for (int i = 0; i < chunks.size(); i++) {
+			chunks[i]->draw(&shader);
+		}
+		
 		glfwSwapBuffers(m_window.getWindow());
 	}
 

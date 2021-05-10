@@ -2,8 +2,9 @@
 
 #include "Renderer/Renderer.h"
 #include "Buffers.h"
-#include "Camera.h"
+#include "Player.h"
 #include "Textures.h"
+#include "World/World.h"
 
 namespace mc {
 	class Game {
@@ -14,7 +15,9 @@ namespace mc {
 		void start();
 		void release();
 	private:
-		Renderer* m_renderer;
-		Camera m_camera;
+		Renderer* m_renderer = nullptr;
+		Player m_player;
+
+		World m_world;
 	};
 }
