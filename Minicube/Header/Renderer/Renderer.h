@@ -4,7 +4,6 @@
 #include <string>
 
 #include "Window.h"
-#include "Buffers.h"
 #include "Camera.h"
 #include "World/World.h"
 

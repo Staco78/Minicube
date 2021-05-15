@@ -18,6 +18,7 @@ namespace mc {
 		void init(Camera* camera);
 		void setBlock(glm::ivec3 pos);
 		void setBlock(int x, int y, int z) { setBlock(glm::ivec3(x, y, z)); }
+		void update();
 		std::vector<Chunk*> getVisibleChunks();
 	private:
 		ChunkMap m_chunks;

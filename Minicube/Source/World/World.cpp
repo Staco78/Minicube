@@ -10,9 +10,17 @@ namespace mc {
 		chunk->setBlock(pos.x % 16, pos.y, pos.z % 16);
 	}
 
+	void World::update() {
+		for (auto iterator = m_chunks.begin(); iterator != m_chunks.end(); iterator++) {
+			iterator->second.update();
+		}
+	}
+
 	std::vector<Chunk*> World::getVisibleChunks() {
+
 		int renderDistance = 4;
 		std::vector<Chunk*> chunks;
+
 		Chunk* playerChunk = m_chunks.get(floor(m_camera->getPosition().x / 16.0), floor(m_camera->getPosition().z / 16.0));
 		for (int x = playerChunk->getPos().x - renderDistance; x <= playerChunk->getPos().x + renderDistance; x++)
 			for (int y = playerChunk->getPos().y - renderDistance; y <= playerChunk->getPos().y + renderDistance; y++)
