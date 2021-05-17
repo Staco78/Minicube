@@ -8,10 +8,12 @@ namespace mc {
 		m_player.init(m_renderer->getWindow());
 		m_world.init(m_player.getCamera());
 
-		for (int x = 0; x < 100; x++)
-			for (int z = 0; z < 100; z++)
-				for (int y = 0; y < 20; y++)
+		for (int x = -96; x < 96; x++)
+			for (int z = -96; z < 96; z++)
+				for (int y = 0; y < 1; y++)
 					m_world.setBlock(x, y, z);
+
+		//m_world.setBlock(0, 0, 0);
 
 
 

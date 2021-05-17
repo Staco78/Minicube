@@ -9,11 +9,14 @@ namespace mc {
 		glBindVertexArray(m_VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO.getID());
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
+
+		glVertexAttribPointer(2, 1, GL_INT, GL_FALSE, 6 * sizeof(float), (void*)(5 * sizeof(float)));
+		glEnableVertexAttribArray(2);
 
 		m_model = glm::translate(m_model, glm::vec3(pos.x * 16, 0, pos.y * 16));
 
@@ -43,9 +46,7 @@ namespace mc {
 		shader->use();
 		shader->setMat4("model", m_model);
 		glBindVertexArray(m_VAO);
-		unsigned int count = m_VBO.getTrianglesCount();
-		/*if (count != 0)
-			std::cout << count << std::endl;*/
+		glBindTexture(GL_TEXTURE_2D_ARRAY, Textures::getArrayId());
 		glDrawArrays(GL_TRIANGLES, 0, m_VBO.getTrianglesCount());
 
 	}
@@ -67,17 +68,17 @@ namespace mc {
 			m_VBO.addData(&block.getFaces()->get(utils::Side::right)->getChunkVertices(pos));*/
 
 			if (m_blocks.get(pos.x + 1, pos.y, pos.z) == nullptr)
-				m_VBO.addData(&block.getFaces()->get(utils::Side::right)->getChunkVertices(pos));
+				m_VBO.addData(block.getFaces()->get(utils::Side::left)->getChunkVertices(pos, 1));
 			if (m_blocks.get(pos.x - 1, pos.y, pos.z) == nullptr)
-				m_VBO.addData(&block.getFaces()->get(utils::Side::left)->getChunkVertices(pos));
+				m_VBO.addData(block.getFaces()->get(utils::Side::right)->getChunkVertices(pos, 1));
 			if (m_blocks.get(pos.x, pos.y + 1, pos.z) == nullptr)
-				m_VBO.addData(&block.getFaces()->get(utils::Side::top)->getChunkVertices(pos));
+				m_VBO.addData(block.getFaces()->get(utils::Side::top)->getChunkVertices(pos, 1));
 			if (m_blocks.get(pos.x, pos.y - 1, pos.z) == nullptr)
-				m_VBO.addData(&block.getFaces()->get(utils::Side::bottom)->getChunkVertices(pos));
+				m_VBO.addData(block.getFaces()->get(utils::Side::bottom)->getChunkVertices(pos, 1));
 			if (m_blocks.get(pos.x, pos.y, pos.z + 1) == nullptr)
-				m_VBO.addData(&block.getFaces()->get(utils::Side::front)->getChunkVertices(pos));
+				m_VBO.addData(block.getFaces()->get(utils::Side::back)->getChunkVertices(pos, 1));
 			if (m_blocks.get(pos.x, pos.y, pos.z - 1) == nullptr)
-				m_VBO.addData(&block.getFaces()->get(utils::Side::back)->getChunkVertices(pos));
+				m_VBO.addData(block.getFaces()->get(utils::Side::front)->getChunkVertices(pos, 1));
 			
 
 
@@ -95,7 +96,7 @@ namespace mc {
 
 	void DynamicVBO::addData(std::vector<float>* data) {
 		m_data.insert(m_data.end(), data->begin(), data->end());
-
+		delete data;
 	}
 	
 	void DynamicVBO::sendData() {

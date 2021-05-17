@@ -9,6 +9,6 @@
 namespace mc {
 	namespace Textures {
 		void init();
-		unsigned int loadTexture(const std::string& name);
+		unsigned int getArrayId();
 	}
 }

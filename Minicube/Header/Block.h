@@ -9,30 +9,31 @@ namespace mc {
 	public:
 		void init(utils::Side side) {
 			if (side == utils::Side::front)
-				m_vertices = vertices::cube::front;
+				m_vertices = &vertices::cube::front;
 			else if (side == utils::Side::back)
-				m_vertices = vertices::cube::back;
+				m_vertices = &vertices::cube::back;
 			else if (side == utils::Side::left)
-				m_vertices = vertices::cube::left;
+				m_vertices = &vertices::cube::left;
 			else if (side == utils::Side::right)
-				m_vertices = vertices::cube::right;
+				m_vertices = &vertices::cube::right;
 			else if (side == utils::Side::bottom)
-				m_vertices = vertices::cube::bottom;
+				m_vertices = &vertices::cube::bottom;
 			else if (side == utils::Side::top)
-				m_vertices = vertices::cube::top;
+				m_vertices = &vertices::cube::top;
 		}
-		std::vector<float>* getVertices() { return &m_vertices; }
-		std::vector<float> getChunkVertices(const glm::uvec3& pos) {
-			std::vector<float> r;
+		std::vector<float>* getVertices() { return m_vertices; }
+		std::vector<float>* getChunkVertices(const glm::uvec3& pos, unsigned int blockType) {
+			std::vector<float>* r = new std::vector<float>;
 
-			for (unsigned int i = 0; i < m_vertices.size(); i += 5) {
-				r.push_back(m_vertices[i] + pos.x);
+			for (unsigned int i = 0; i < m_vertices->size(); i += 5) {
+				r->push_back(m_vertices->at(i) + pos.x);
 				/*if (pos.x == 15)
 					std::cout << r[i] << std::endl;*/
-				r.push_back(m_vertices[i + 1] + pos.y);
-				r.push_back(m_vertices[i + 2] + pos.z);
-				r.push_back(m_vertices[i + 3]);
-				r.push_back(m_vertices[i + 4]);
+				r->push_back(m_vertices->at(i + 1) + pos.y);
+				r->push_back(m_vertices->at(i + 2) + pos.z);
+				r->push_back(m_vertices->at(i + 3));
+				r->push_back(m_vertices->at(i + 4));
+				r->push_back(float(blockType));
 
 				//std::cout << pos.x << ":" << pos.y << ":" << pos.z << std::endl;
 			}
@@ -40,7 +41,7 @@ namespace mc {
 			return r;
 		}
 	private:
-		std::vector<float> m_vertices;
+		std::vector<float>* m_vertices;
 	};
 
 	class Faces {

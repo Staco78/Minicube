@@ -28,41 +28,95 @@ namespace std
 namespace mc {
 	namespace vertices {
 		namespace cube {
+			//static std::vector<float> front = {
+			//	-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // Bottom-left
+			//	 0.5f,  0.5f, -0.5f,  0.0f, 0.0f, // top-right
+			//	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right         
+			//	 0.5f,  0.5f, -0.5f,  0.0f, 0.0f, // top-right
+			//	-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // bottom-left
+			//	-0.5f,  0.5f, -0.5f,  1.0f, 0.0f, // top-left
+			//};
+			//static std::vector<float> back = {
+			//	-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, // bottom-left
+			//	 0.5f, -0.5f,  0.5f,  0.0f, 1.0f, // bottom-right
+			//	 0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // top-right
+			//	 0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // top-right
+			//	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+			//	-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, // bottom-left
+			//};
+			//static std::vector<float> right = {
+			//	// Left face
+			//	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // top-right
+			//	-0.5f,  0.5f, -0.5f,  1.0f, 0.0f, // top-left
+			//	-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // bottom-left
+			//	-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // bottom-left
+			//	-0.5f, -0.5f,  0.5f,  0.0f, 1.0f, // bottom-right
+			//	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // top-right
+			//};
+			//static std::vector<float> left = {
+			//	// Right face
+			//	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+			//	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+			//	 0.5f,  0.5f, -0.5f,  0.0f, 0.0f, // top-right         
+			//	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+			//	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+			//	 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, // bottom-left     
+			//};
+			//static std::vector<float> bottom = {
+			//	// Bottom face
+			//	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
+			//	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // top-left
+			//	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
+			//	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-left
+			//	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
+			//	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // top-right
+			//};
+			//static std::vector<float> top = {
+			//	// Top face
+			//	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+			//	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+			//	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right     
+			//	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
+			//	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+			//	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f  // bottom-left        
+			//};
+
+
 			static std::vector<float> back = {
 				// Back face
-				-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // Bottom-left
-				 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
-				 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // bottom-right         
-				 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right
-				-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // bottom-left
-				-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // top-left
+				-0.5f, -0.5f, 0.5f,  1.0f, 1.0f, // Bottom-left
+				 0.5f, -0.5f, 0.5f,  0.0f, 1.0f, // bottom-right         
+				 0.5f,  0.5f, 0.5f,  0.0f, 0.0f, // top-right
+				 0.5f,  0.5f, 0.5f,  0.0f, 0.0f, // top-right
+				-0.5f,  0.5f, 0.5f,  1.0f, 0.0f, // top-left
+				-0.5f, -0.5f, 0.5f,  1.0f, 1.0f, // bottom-left
 			};
 			static std::vector<float> front = {
 				// Front face
-				-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
-				 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // bottom-right
-				 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
-				 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // top-right
-				-0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // top-left
-				-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left
+				-0.5f, -0.5f,  -0.5f,  1.0f, 1.0f, // bottom-left
+				 0.5f,  0.5f,  -0.5f,  0.0f, 0.0f, // top-right
+				 0.5f, -0.5f,  -0.5f,  0.0f, 1.0f, // bottom-right
+				 0.5f,  0.5f,  -0.5f,  0.0f, 0.0f, // top-right
+				-0.5f, -0.5f,  -0.5f,  1.0f, 1.0f, // bottom-left
+				-0.5f,  0.5f,  -0.5f,  1.0f, 0.0f, // top-left
 			};
 			static std::vector<float> left = {
 				// Left face
-				-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
-				-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-left
-				-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
-				-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-left
-				-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-right
-				-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-right
+				0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // top-right
+				0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // bottom-left
+				0.5f,  0.5f, -0.5f,  1.0f, 0.0f, // top-left
+				0.5f, -0.5f, -0.5f,  1.0f, 1.0f, // bottom-left
+				0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // top-right
+				0.5f, -0.5f,  0.5f,  0.0f, 1.0f, // bottom-right
 			};
 			static std::vector<float> right = {
 				// Right face
-				 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
-				 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
-				 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // top-right         
-				 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
-				 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
-				 0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // bottom-left     
+				 -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, // top-right         
+				 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+				 -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
+				 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // bottom-right
+				 -0.5f, -0.5f,  0.5f,  1.0f, 1.0f, // bottom-left     
+				 -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // top-left
 			};
 			static std::vector<float> bottom = {
 				// Bottom face

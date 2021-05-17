@@ -7,6 +7,7 @@
 
 #include "Block.h"
 #include "Shader.h"
+#include "Textures.h"
 
 namespace std {
 	template<> struct less<glm::uvec3>
@@ -32,14 +33,19 @@ namespace mc {
 			if (pos.x < 0 || pos.y < 0 || pos.z < 0 || pos.x > 15 || pos.z > 15)
 				return nullptr;
 
-			try
+			auto it = find(pos);
+			if (it == end())
+				return nullptr;
+			return &it->second;
+
+			/*try
 			{
 				return &at(pos);
 			}
 			catch (const std::exception&)
 			{
 				return nullptr;
-			}
+			}*/
 		}
 
 		Block* get(int x, int y, int z) { return get(glm::ivec3(x, y, z)); }

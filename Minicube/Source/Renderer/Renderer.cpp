@@ -38,7 +38,7 @@ namespace mc {
 
 		shader.load("Shaders/shader.vert", "Shaders/shader.frag");
 
-		projection = glm::perspective(glm::radians(45.0f), m_window.getWindowSize().x / m_window.getWindowSize().y, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(55.0f), m_window.getWindowSize().x / m_window.getWindowSize().y, 0.1f, 1000.0f);
 
 	}
 
