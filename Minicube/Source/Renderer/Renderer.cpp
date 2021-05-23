@@ -36,10 +36,14 @@ namespace mc {
 		glEnable(GL_MULTISAMPLE);
 		glEnable(GL_CULL_FACE);
 
-		shader.load("Shaders/shader.vert", "Shaders/shader.frag");
 
-		projection = glm::perspective(glm::radians(55.0f), m_window.getWindowSize().x / m_window.getWindowSize().y, 0.1f, 1000.0f);
 
+		m_projection = glm::perspective(glm::radians(55.0f), m_window.getWindowSize().x / m_window.getWindowSize().y, 0.1f, 1000.0f);
+
+		m_shader.load("Shaders/shader.vert", "Shaders/shader.frag");
+
+		m_skybox.init(m_camera);
+		m_skybox.setProjection(m_projection);
 	}
 
 	void Renderer::release() {
@@ -51,15 +55,20 @@ namespace mc {
 	void Renderer::render() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		shader.use();
-		shader.setMat4("projection", projection);
-		shader.setMat4("view", m_camera->getMatrix());
+		m_shader.use();
+		m_shader.setMat4("projection", m_projection);
+		m_shader.setMat4("view", m_camera->getMatrix());
 
 		std::vector<Chunk*> chunks = m_world->getVisibleChunks();
 		for (int i = 0; i < chunks.size(); i++) {
-			chunks[i]->draw(&shader);
+			chunks[i]->draw(&m_shader);
 		}
+		chunks.clear();
 		
+
+		m_skybox.draw();
+
+
 		glfwSwapBuffers(m_window.getWindow());
 	}
 

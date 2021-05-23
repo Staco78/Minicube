@@ -68,7 +68,7 @@ namespace mc {
         glm::vec3 dir = glm::normalize(d);
 
 
-        float speed = 8 * deltaTime;
+        float speed = 12 * deltaTime;
         if (glfwGetKey(mp_window->getWindow(), GLFW_KEY_W) == GLFW_PRESS)
             pos -= speed * dir;
         if (glfwGetKey(mp_window->getWindow(), GLFW_KEY_S) == GLFW_PRESS)

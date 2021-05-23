@@ -5,6 +5,8 @@
 #include "Textures.h"
 #include "World/World.h"
 
+#include "Blocks/Dirt.h"
+
 namespace mc {
 	class Game {
 	public:

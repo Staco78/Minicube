@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Camera.h"
 #include "World/World.h"
+#include "Skybox.h"
 
 #include "Block.h"
 
@@ -20,10 +21,11 @@ namespace mc {
 		Window* getWindow() { return &m_window; }
 	private:
 		Window m_window;
-		Shader shader;
+		Shader m_shader;
+		Skybox m_skybox;
 		Camera* m_camera = nullptr;
 		World* m_world = nullptr;
-		glm::mat4 projection = glm::mat4(1.0f);
+		glm::mat4 m_projection = glm::mat4(1.0f);
 
 	};
 }

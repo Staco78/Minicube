@@ -8,6 +8,11 @@
 #include "Block.h"
 #include "Shader.h"
 #include "Textures.h"
+#include "Generation/Generation.h"
+
+#include "Blocks/Dirt.h"
+#include "Blocks/Stone.h"
+#include "Blocks/Grass.h"
 
 namespace std {
 	template<> struct less<glm::uvec3>
@@ -26,7 +31,7 @@ namespace std {
 
 namespace mc {
 
-	class BlockMap : public std::map<glm::uvec3, Block> {
+	class BlockMap : public std::map<glm::uvec3, Block*> {
 	public:
 		Block* get(glm::ivec3 pos) {
 
@@ -36,19 +41,15 @@ namespace mc {
 			auto it = find(pos);
 			if (it == end())
 				return nullptr;
-			return &it->second;
-
-			/*try
-			{
-				return &at(pos);
-			}
-			catch (const std::exception&)
-			{
-				return nullptr;
-			}*/
+			return it->second;
 		}
 
 		Block* get(int x, int y, int z) { return get(glm::ivec3(x, y, z)); }
+
+		~BlockMap() {
+			for (auto it = this->begin(); it != this->end(); it++)
+				delete it->second;
+		}
 	};
 
 	class DynamicVBO {
@@ -70,17 +71,29 @@ namespace mc {
 	public:
 		void init(glm::ivec2 pos);
 		void init(int x, int y) { init(glm::vec2(x, y)); }
-		void setBlock(glm::uvec3 pos);
-		void setBlock(unsigned int x, unsigned int y, unsigned int z) { setBlock(glm::uvec3(x, y, z)); }
+
+		template<class T>
+		void setBlock(glm::uvec3 pos) {
+			if (pos.x > 15 || pos.z > 15)
+				assert(false);
+
+			m_blocks.erase(pos);
+			m_blocks[pos] = new T();
+			m_blocks[pos]->init(pos);
+		}
+
+		/*template<class T>
+		void setBlock(unsigned int x, unsigned int y, unsigned int z) { setBlock<T>(glm::uvec3(x, y, z)); }*/
+
 		void draw(Shader* shader);
 		void update();
+		void generate(Generation::Generator* generator);
 		glm::vec2 getPos() { return m_pos; }
 	private:
 		DynamicVBO m_VBO;
 		unsigned int m_VAO;
 		glm::ivec2 m_pos;
 		BlockMap m_blocks;
-		glm::ivec3 getGlobalBlockPos(glm::ivec3 localPos);
 		glm::mat4 m_model = glm::mat4(1.0f);
 
 		void createDynamicVBO();

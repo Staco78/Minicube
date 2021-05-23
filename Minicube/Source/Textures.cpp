@@ -5,11 +5,24 @@ namespace mc {
 
 		namespace {
 
+			class textureMap : public std::map<std::string, unsigned int> {
+			public:
+				void add(const std::string& name) {
+					int x = size();
+					operator[](name) = x;
+
+					std::cout << name << " ==> " << x << std::endl;
+
+				}
+			};
+
 			unsigned int arrayID;
+			textureMap texturesName;
+
 
 			void addTexture(const std::string& name, int count) {
 				int width, height, nrChannels;
-				unsigned char* data = stbi_load(name.c_str(), &width, &height, &nrChannels, 0);
+				unsigned char* data = stbi_load(std::string("assets/textures/" + name).c_str(), &width, &height, &nrChannels, 0);
 				if (data)
 				{
 					glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0,
@@ -26,7 +39,7 @@ namespace mc {
 				}
 			}
 
-			unsigned int loadTextureArray(const std::vector<std::string>& textures, int width, int height) {
+			unsigned int loadTextureArray(const textureMap& textures, int width, int height) {
 				unsigned int ID;
 
 				glGenTextures(1, &ID);
@@ -41,25 +54,31 @@ namespace mc {
 					width, height, textures.size(), 0,
 					GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
-				for (int i = 0; i < textures.size(); i++) {
-					addTexture(textures[i], i);
+				for (auto it = textures.begin(); it != textures.end(); it++) {
+					addTexture(it->first, it->second);
 				}
 
 				glGenerateMipmap(GL_TEXTURE_2D_ARRAY);
 
 				return ID;
 			}
+
 		}
 
 		void init() {
-			std::vector<std::string> textures;
-			textures.push_back("dirt.png");
-			textures.push_back("furnace_front.png");
-			arrayID = loadTextureArray(textures, 16, 16);
+			
+			texturesName.add("dirt.png");
+			texturesName.add("stone.png");
+			texturesName.add("grass.png");
+			arrayID = loadTextureArray(texturesName, 16, 16);
 		}
 
 		unsigned int getArrayId() {
 			return arrayID;
+		}
+
+		unsigned int getTextureNumber(const std::string& name) {
+			return texturesName.at(name + ".png");
 		}
 
 	}

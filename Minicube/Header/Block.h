@@ -2,12 +2,15 @@
 #include <Glm/glm.hpp>
 
 #include "Utils.h"
+#include "Textures.h"
 
 namespace mc {
 
 	class Face {
 	public:
-		void init(utils::Side side) {
+		void init(utils::Side side, unsigned int textureID) {
+			m_textureID = textureID;
+
 			if (side == utils::Side::front)
 				m_vertices = &vertices::cube::front;
 			else if (side == utils::Side::back)
@@ -22,7 +25,7 @@ namespace mc {
 				m_vertices = &vertices::cube::top;
 		}
 		std::vector<float>* getVertices() { return m_vertices; }
-		std::vector<float>* getChunkVertices(const glm::uvec3& pos, unsigned int blockType) {
+		std::vector<float>* getChunkVertices(const glm::uvec3& pos) {
 			std::vector<float>* r = new std::vector<float>;
 
 			for (unsigned int i = 0; i < m_vertices->size(); i += 5) {
@@ -33,7 +36,10 @@ namespace mc {
 				r->push_back(m_vertices->at(i + 2) + pos.z);
 				r->push_back(m_vertices->at(i + 3));
 				r->push_back(m_vertices->at(i + 4));
-				r->push_back(float(blockType));
+				r->push_back(m_textureID);
+
+				/*if (m_textureID == 1)
+					assert(false);*/
 
 				//std::cout << pos.x << ":" << pos.y << ":" << pos.z << std::endl;
 			}
@@ -42,17 +48,18 @@ namespace mc {
 		}
 	private:
 		std::vector<float>* m_vertices;
+		unsigned int m_textureID;
 	};
 
 	class Faces {
 	public:
-		void init() {
-			front.init(utils::Side::front);
-			back.init(utils::Side::back);
-			left.init(utils::Side::left);
-			right.init(utils::Side::right);
-			bottom.init(utils::Side::bottom);
-			top.init(utils::Side::top);
+		void init(const std::string& name) {
+			front.init(utils::Side::front, Textures::getTextureNumber(name));
+			back.init(utils::Side::back, Textures::getTextureNumber(name));
+			left.init(utils::Side::left, Textures::getTextureNumber(name));
+			right.init(utils::Side::right, Textures::getTextureNumber(name));
+			bottom.init(utils::Side::bottom, Textures::getTextureNumber(name));
+			top.init(utils::Side::top, Textures::getTextureNumber(name));
 		}
 		Face* get(utils::Side side) {
 			if (side == utils::Side::front)
@@ -79,11 +86,14 @@ namespace mc {
 
 	class Block {
 	public:
-		void init(int x, int y, int z) { init(glm::uvec3(x, y, z)); }
-		void init(glm::uvec3 pos);
+		virtual void init(const glm::uvec3& pos);
 		Faces* getFaces() { return &m_faces; }
+	protected:
+		void setName(const std::string& name) { m_name = name; }
+
 	private:
 		glm::uvec3 m_pos;
 		Faces m_faces;
+		std::string m_name;
 	};	
 }

@@ -7,19 +7,6 @@ namespace mc {
 		Textures::init();
 		m_player.init(m_renderer->getWindow());
 		m_world.init(m_player.getCamera());
-
-		for (int x = -96; x < 96; x++)
-			for (int z = -96; z < 96; z++)
-				for (int y = 0; y < 1; y++)
-					m_world.setBlock(x, y, z);
-
-		//m_world.setBlock(0, 0, 0);
-
-
-
-		m_world.update();
-
-
 	}
 
 	void Game::start() {
@@ -63,10 +50,6 @@ namespace mc {
 				debugTimer--;
 
 			glfwSetInputMode(m_renderer->getWindow()->getWindow(), GLFW_STICKY_KEYS, GL_TRUE);
-
-
-			//std::cout << m_player.getCamera()->getPosition().x << ":" << m_player.getCamera()->getPosition().y << ":" << m_player.getCamera()->getPosition().z << std::endl;
-
 
 
 			m_player.update();
